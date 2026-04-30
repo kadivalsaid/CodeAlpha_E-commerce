@@ -1,0 +1,36 @@
+{% extends 'base.html' %}
+{% block title %}Home · ShopLite{% endblock %}
+
+{% block content %}
+  <div class="card" style="margin-bottom:18px">
+    <div class="card-body">
+      <h2 style="margin:0 0 6px">Products</h2>
+      <div class="muted">Browse items and add them to your cart.</div>
+    </div>
+  </div>
+
+  <div class="grid cols-3">
+    {% for p in products %}
+      <a class="card" href="{% url 'product_detail' p.id %}">
+        {% if p.image %}
+          <img class="product-img" src="{{ p.image.url }}" alt="{{ p.name }}" loading="lazy" decoding="async">
+        {% else %}
+          <div class="product-img placeholder">No image</div>
+        {% endif %}
+        <div class="card-body">
+          <div class="card-title">{{ p.name }}</div>
+          <div class="muted">Price</div>
+          <div class="price">₹{{ p.price }}</div>
+        </div>
+      </a>
+    {% empty %}
+      <div class="card">
+        <div class="card-body">
+          <div class="card-title">No products yet</div>
+          <div class="muted">Add products from the admin panel.</div>
+        </div>
+      </div>
+    {% endfor %}
+  </div>
+{% endblock %}
+

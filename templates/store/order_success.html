@@ -1,0 +1,32 @@
+{% extends 'base.html' %}
+{% block title %}Order Success · ShopLite{% endblock %}
+
+{% block content %}
+  <div class="card">
+    <div class="card-body">
+      <h2 style="margin:0 0 8px">Order placed!</h2>
+      <div class="muted" style="margin-bottom:14px">
+        Your order <strong>#{{ order.id }}</strong> was saved successfully.
+      </div>
+
+      <div class="total-box" style="margin-bottom:14px">
+        <span class="muted">Total paid</span>
+        <span class="price">₹{{ order.total }}</span>
+      </div>
+
+      <div class="muted" style="margin-bottom:10px">Items</div>
+      {% for item in order.items.all %}
+        <div class="cart-row" style="grid-template-columns: 1fr .4fr .5fr; padding:8px 0">
+          <div>{{ item.product.name }}</div>
+          <div class="right">x{{ item.quantity }}</div>
+          <div class="right">₹{{ item.price }}</div>
+        </div>
+      {% endfor %}
+
+      <div style="margin-top:16px">
+        <a class="btn primary" href="{% url 'home' %}">Back to Home</a>
+      </div>
+    </div>
+  </div>
+{% endblock %}
+

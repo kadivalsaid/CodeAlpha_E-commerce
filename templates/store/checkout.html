@@ -1,0 +1,51 @@
+{% extends 'base.html' %}
+{% block title %}Checkout · ShopLite{% endblock %}
+
+{% block content %}
+  <div class="grid" style="grid-template-columns: 1fr .9fr; gap:18px">
+    <div class="card">
+      <div class="card-body">
+        <h2 style="margin:0 0 10px">Checkout</h2>
+        <form method="post">
+          {% csrf_token %}
+          <label>Full name</label>
+          <input name="full_name" required>
+
+          <label>Email</label>
+          <input name="email" type="email" required>
+
+          <label>Address</label>
+          <textarea name="address" rows="3" required></textarea>
+
+          <label>City</label>
+          <input name="city" required>
+
+          <label>Postal code</label>
+          <input name="postal_code" required>
+
+          <div style="margin-top:14px">
+            <button class="btn primary full" type="submit">Place Order</button>
+          </div>
+        </form>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-body">
+        <h3 style="margin:0 0 10px">Order summary</h3>
+        {% for item in items %}
+          <div class="cart-row" style="grid-template-columns: 1fr .4fr .5fr; padding:8px 0">
+            <div>{{ item.product.name }}</div>
+            <div class="right">x{{ item.quantity }}</div>
+            <div class="right">₹{{ item.line_total }}</div>
+          </div>
+        {% endfor %}
+        <div style="margin-top:12px" class="total-box">
+          <span class="muted">Total</span>
+          <span class="price">₹{{ cart.total }}</span>
+        </div>
+      </div>
+    </div>
+  </div>
+{% endblock %}
+

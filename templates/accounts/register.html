@@ -1,0 +1,30 @@
+{% extends 'base.html' %}
+{% block title %}Register · ShopLite{% endblock %}
+
+{% block content %}
+  <div class="card" style="max-width:520px;margin:0 auto">
+    <div class="card-body">
+      <h2 style="margin:0 0 10px">Create account</h2>
+      <form method="post">
+        {% csrf_token %}
+
+        {% for field in form %}
+          <label>{{ field.label }}</label>
+          {{ field }}
+          {% if field.errors %}
+            <div class="muted" style="color:#ffd6de;margin-top:6px">{{ field.errors|striptags }}</div>
+          {% endif %}
+        {% endfor %}
+
+        <div style="margin-top:14px">
+          <button class="btn primary full" type="submit">Register</button>
+        </div>
+      </form>
+
+      <div class="muted" style="margin-top:12px">
+        Already have an account? <a class="pill" href="{% url 'login' %}">Login</a>
+      </div>
+    </div>
+  </div>
+{% endblock %}
+

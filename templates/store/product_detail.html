@@ -1,0 +1,41 @@
+{% extends 'base.html' %}
+{% block title %}{{ product.name }} · ShopLite{% endblock %}
+
+{% block content %}
+  <div class="grid" style="grid-template-columns: 1.1fr .9fr; gap:18px">
+    <div class="card">
+      {% if product.image %}
+        <div class="image-frame">
+          <img class="product-img detail" src="{{ product.image.url }}" alt="{{ product.name }}" loading="lazy" decoding="async">
+        </div>
+      {% else %}
+        <div class="product-img placeholder" style="height:360px">No image</div>
+      {% endif %}
+    </div>
+
+    <div class="card">
+      <div class="card-body">
+        <h2 style="margin:0 0 8px">{{ product.name }}</h2>
+        <div class="muted" style="margin-bottom:10px">{{ product.description|default:"No description." }}</div>
+        <div class="total-box" style="margin:12px 0">
+          <div>
+            <div class="muted">Price</div>
+            <div class="price">₹{{ product.price }}</div>
+          </div>
+          <div class="muted">Secure checkout</div>
+        </div>
+
+        {% if user.is_authenticated %}
+          <form method="post" action="{% url 'add_to_cart' product.id %}">
+            {% csrf_token %}
+            <button class="btn primary full" type="submit">Add to Cart</button>
+          </form>
+        {% else %}
+          <a class="btn primary full" href="{% url 'login' %}?next={% url 'product_detail' product.id %}">Login to Add to Cart</a>
+          <div class="muted" style="margin-top:10px">You must be logged in to place orders.</div>
+        {% endif %}
+      </div>
+    </div>
+  </div>
+{% endblock %}
+
